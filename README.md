@@ -1,13 +1,13 @@
 # Smart Bookmark App
 
-A modern, real-time bookmark manager application built with Next.js, Supabase, and Tailwind CSS.
+A modern, real time bookmark manager application built with Next.js, Supabase, and Tailwind CSS.
 
 ## Features
 
 - 🔐 **Authentication**: Secure login with Google via Supabase Auth.
 - 🔖 **Bookmark Management**: Add and delete bookmarks easily.
 - ⚡ **Real-time Updates**: Bookmarks update instantly across devices using Supabase Realtime.
-- 🎨 **Responsive Design**: Styled with Tailwind CSS for a clean and mobile-friendly interface.
+- 🎨 **Responsive Design**: Styled with Tailwind CSS for a clean and mobile friendly interface.
 
 ## Tech Stack
 
@@ -84,3 +84,17 @@ npm run dev
 ```
 
 Open http://localhost:3000 with your browser to see the result.
+
+## Challenges & Solutions
+
+### 1. Real-time Updates with Supabase
+**Challenge:** Ensuring the bookmark list updates instantly across devices without manual refreshing.
+**Solution:** Implemented Supabase Realtime subscriptions using `supabase.channel`. By listening to `INSERT` and `DELETE` events on the `bookmarks` table, the application state is automatically synchronized with the database.
+
+### 2. Row Level Security (RLS)
+**Challenge:** Preventing users from accessing or modifying other users' bookmarks.
+**Solution:** Enabled RLS on the `bookmarks` table and created specific policies for `SELECT`, `INSERT`, and `DELETE` operations. These policies enforce that `auth.uid()` matches the `user_id` column, ensuring data privacy.
+
+### 3. Authentication State Management
+**Challenge:** Handling user sessions and protecting routes.
+**Solution:** Integrated Supabase Auth to manage Google sign-in. The app checks for an active session and conditionally renders the login screen or the bookmark list.
